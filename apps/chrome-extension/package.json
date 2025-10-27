@@ -1,0 +1,20 @@
+{
+  "name": "chrome-extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "compile": "tsc",
+    "copy-assets": "cp -r public/* dist/",
+    "build": "pnpm clean && pnpm compile && pnpm copy-assets"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chrome": "^0.1.24",
+    "typescript": "^5.9.3"
+  }
+}
