@@ -3,8 +3,14 @@
   "description": "Kindle Highlights Extension",
   "version": "1.0",
   "manifest_version": 3,
+  "permissions": ["tabs", "cookies"],
+  "host_permissions": ["https://read.amazon.com/*"],
   "action": {
     "default_popup": "index.html",
     "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
   }
 }

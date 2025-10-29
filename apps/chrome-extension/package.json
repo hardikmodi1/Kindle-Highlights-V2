@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "format": "prettier . --write",
     "clean": "rm -rf dist",
     "compile": "tsc",
     "copy-assets": "cp -r public/* dist/",
@@ -15,6 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chrome": "^0.1.24",
+    "prettier": "^3.6.2",
     "typescript": "^5.9.3"
   }
 }
