@@ -16,15 +16,16 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String             @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean            @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  books         BooksReadByUsers[]
 
   @@unique([email])
   @@map("user")
@@ -73,4 +74,28 @@ model Verification {
   updatedAt  DateTime @default(now()) @updatedAt
 
   @@map("verification")
+}
+
+model Book {
+  id            String             @id @default(uuid())
+  coverImageUrl String?
+  asin          String             @unique
+  title         String
+  authors       String[]           @default([])
+  users         BooksReadByUsers[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @default(now()) @updatedAt
+
+  @@map("book")
+}
+
+model BooksReadByUsers {
+  book           Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  lastAccessedOn DateTime?
+
+  @@id([bookId, userId])
+  @@map("books_read_by_users")
 }

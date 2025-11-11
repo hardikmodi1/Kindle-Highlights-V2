@@ -6,9 +6,15 @@ import fetchWithCookie from './utils/fetch.js';
 import { text } from './data.js';
 
 const main = async () => {
-  const response = await fetchWithCookie('/notebook');
-  const text = await response.text();
-  console.log(text);
+  // const response = await fetchWithCookie('/notebook');
+  // const text = await response.text();
+  // const response = await fetch('http://localhost:3000/api/books', {
+  //   credentials: 'include',
+  //   body: JSON.stringify({ books: [{ name: 'hello' }] }),
+  //   method: 'POST',
+  // });
+  // console.log(await response.text());
+  // console.log(text);
 
   await createOffScreen();
   chrome.runtime.sendMessage<MessageType>(
@@ -16,8 +22,13 @@ const main = async () => {
       type: MESSAGE_TYPES.PARSE_HTML,
       html: text,
     },
-    documentResponse => {
-      console.log(documentResponse);
+    async ({ books }) => {
+      const response = await fetch('http://localhost:3000/api/books', {
+        credentials: 'include',
+        body: JSON.stringify({ books }),
+        method: 'POST',
+      });
+      console.log(await response.text());
     }
   );
   // const parser = new DOMParser();
