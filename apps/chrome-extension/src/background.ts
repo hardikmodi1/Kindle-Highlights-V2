@@ -1,4 +1,4 @@
-import { MESSAGE_TYPES } from './constants.js';
+import { BASE_API_URL, MESSAGE_TYPES } from './constants.js';
 import type { MessageType } from './types/message.js';
 import { createOffScreen } from './utils/createOffScreen.js';
 
@@ -23,7 +23,7 @@ const main = async () => {
       html: text,
     },
     async ({ books }) => {
-      const response = await fetch('http://localhost:3000/api/books', {
+      const response = await fetch(`${BASE_API_URL}/api/books`, {
         credentials: 'include',
         body: JSON.stringify({ books }),
         method: 'POST',

@@ -14,7 +14,7 @@ function RouteComponent() {
     return <Loader />;
   }
   if (session) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/library" />;
   }
   return <Outlet />;
 }

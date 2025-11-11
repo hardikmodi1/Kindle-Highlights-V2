@@ -9,6 +9,7 @@ import { formatAuthors } from '@/utils/formatAuthors';
 import { createIsomorphicFn } from '@tanstack/react-start';
 import { getRequestHeaders } from '@tanstack/react-start/server';
 import { BookData } from '@/types/book';
+import { Button } from '@/components/ui/button';
 
 const fetchBooks = createIsomorphicFn()
   .server<
@@ -44,7 +45,7 @@ const fetchBooks = createIsomorphicFn()
     }
   });
 
-export const Route = createFileRoute('/_auth/dashboard')({
+export const Route = createFileRoute('/_auth/library')({
   component: RouteComponent,
   loader: fetchBooks,
 });
@@ -58,7 +59,7 @@ function RouteComponent() {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
       {books.map(({ book, lastAccessedOn }) => (
-        <Card className="py-4 max-w-2xs">
+        <Card key={book.id} className="py-4 max-w-2xs hover:shadow-lg hover:cursor-pointer">
           <CardContent className="px-4 flex flex-col items-center gap-2">
             {book.coverImageUrl ? (
               <img className="rounded-lg" src={replaceAmazonImageSize(book.coverImageUrl)} alt={book.title} />

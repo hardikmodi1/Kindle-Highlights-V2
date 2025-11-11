@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react';
+import { Library, Tags } from 'lucide-react';
 
 import {
   Sidebar,
@@ -16,9 +16,14 @@ import { Link } from '@tanstack/react-router';
 
 const items = [
   {
-    title: 'Home',
-    url: '/dashboard',
-    icon: Home,
+    title: 'Library',
+    url: '/library',
+    icon: Library,
+  },
+  {
+    title: 'Manage Tags',
+    url: '/manage-tags',
+    icon: Tags,
   },
 ];
 

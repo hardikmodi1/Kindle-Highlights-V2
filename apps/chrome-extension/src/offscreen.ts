@@ -9,12 +9,8 @@ chrome.runtime.onMessage.addListener(async (message: MessageType, sender, sendRe
       const doc = parser.parseFromString(message.html, 'text/html');
       const books = scrapBooksData(doc);
 
-      // const response = await fetch('http://localhost:3000/api/books', {
-      //   credentials: 'include',
-      //   body: JSON.stringify({ books }),
-      //   method: 'POST',
-      // });
-      // console.log(await response.text());
+      // books.
+
       sendResponse({ books });
       break;
     default:

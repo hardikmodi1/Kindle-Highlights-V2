@@ -25,6 +25,8 @@ model User {
   updatedAt     DateTime           @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  notes         Note[]
+  tags          Tag[]
   books         BooksReadByUsers[]
 
   @@unique([email])
@@ -85,6 +87,7 @@ model Book {
   users         BooksReadByUsers[]
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @default(now()) @updatedAt
+  notes         Note[]
 
   @@map("book")
 }
@@ -98,4 +101,36 @@ model BooksReadByUsers {
 
   @@id([bookId, userId])
   @@map("books_read_by_users")
+}
+
+model Note {
+  id              String  @id @default(uuid())
+  highlightedText String
+  note            String?
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags   Tag[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("note")
+}
+
+model Tag {
+  id        String @id @default(uuid())
+  shortForm String
+  longForm  String
+  userId    String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  notes Note[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("tag")
 }
