@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
-import type { Book } from '@repo/types/book';
+import type { BookDTO } from '@repo/types/book';
 import type { Book as PrismaBook } from '@/generated/prisma/client';
 
 export const Route = createFileRoute('/api/books')({
@@ -28,12 +28,12 @@ export const Route = createFileRoute('/api/books')({
         const sessionData = await auth.api.getSession(request);
         const userId = sessionData?.session?.userId;
         if (userId) {
-          const { books }: { books: Book[] } = await request.json();
+          const { books }: { books: BookDTO[] } = await request.json();
 
           await prisma.$transaction(async tx => {
             const createdBooks = await tx.book.createManyAndReturn({
               skipDuplicates: true,
-              data: books.map((book: Book) => ({
+              data: books.map((book: BookDTO) => ({
                 asin: book.asin,
                 title: book.title,
                 authors: book.authors,

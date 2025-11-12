@@ -1,60 +1,30 @@
-import { createFileRoute, Navigate } from '@tanstack/react-router';
-import { Loader2 } from 'lucide-react';
+import { createFileRoute } from '@tanstack/react-router';
 
-import { authClient } from '@/lib/auth-client';
-import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { replaceAmazonImageSize } from '@/utils/replaceAmazonImageSize';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { formatAuthors } from '@/utils/formatAuthors';
-import { createIsomorphicFn } from '@tanstack/react-start';
-import { getRequestHeaders } from '@tanstack/react-start/server';
-import { BookData } from '@/types/book';
-import { Button } from '@/components/ui/button';
+import { isomorphicFetch } from '@/lib/isomorphicFetch';
+import { ErrorScreen } from '@/components/ErrorScreen';
 
-const fetchBooks = createIsomorphicFn()
-  .server<
-    [],
-    Promise<{
-      books?: BookData[];
-      error?: string;
-    }>
-  >(async () => {
+export const Route = createFileRoute('/_auth/library')({
+  component: RouteComponent,
+  loader: async () => {
     try {
-      const headers = getRequestHeaders();
-      const response = await fetch('/api/books', {
-        headers,
-      });
-      const booksReadByUsers: BookData[] = await response.json();
+      const response = await isomorphicFetch('/api/books');
+      const booksReadByUsers = await response.json();
       return { books: booksReadByUsers };
     } catch (e) {
       return { error: 'Failed to fetch books' };
     }
-  })
-  .client<
-    Promise<{
-      books?: BookData[];
-      error?: string;
-    }>
-  >(async () => {
-    try {
-      const response = await fetch('/api/books', { credentials: 'include' });
-      const booksReadByUsers = await response.json();
-      return { books: booksReadByUsers };
-    } catch (e) {
-      return { books: [], error: 'Failed to fetch books' };
-    }
-  });
-
-export const Route = createFileRoute('/_auth/library')({
-  component: RouteComponent,
-  loader: fetchBooks,
+  },
 });
 
 function RouteComponent() {
   const { books, error } = Route.useLoaderData();
 
-  if (error || !books) {
-    return <div>{error}</div>;
+  if (error) {
+    return <ErrorScreen error={error} />;
   }
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">

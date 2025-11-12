@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "dist",
+    "rootDir": "./src",
+    "module": "ESNext",
+    "target": "ES2019",
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["./src"]
+}
