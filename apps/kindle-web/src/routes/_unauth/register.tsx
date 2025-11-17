@@ -34,7 +34,7 @@ function SignupComponent() {
         name: value.name,
         email: value.email,
         password: value.password,
-        callbackURL: '/dashboard',
+        callbackURL: '/library',
         fetchOptions: {
           onRequest: () => setLoading(true),
           onSuccess: () => setLoading(false),

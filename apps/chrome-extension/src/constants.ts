@@ -3,5 +3,6 @@ export const COOKIE_NAME = 'at-main';
 export const BASE_API_URL = 'http://localhost:3000';
 
 export const MESSAGE_TYPES = {
-  PARSE_HTML: 'parseHtml',
+  PARSE_BOOKS: 'parseBooks',
+  PARSE_NOTES: 'parseNotes',
 } as const;

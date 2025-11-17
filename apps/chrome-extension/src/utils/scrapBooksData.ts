@@ -1,11 +1,13 @@
+import type { BookDTO } from '@repo/types/book';
+
 export const scrapBooksData = (doc: Document) => {
   const booksContainer = doc.getElementsByClassName('kp-notebook-library-each-book');
 
-  const books = [];
+  const books: BookDTO[] = [];
   for (const book of booksContainer) {
     const coverImageUrl = book.getElementsByClassName('kp-notebook-cover-image')[0]?.getAttribute('src');
-    const asin = book.getAttribute('id');
-    const title = book.getElementsByTagName('h2')[0]?.textContent;
+    const asin = book.getAttribute('id') as string;
+    const title = book.getElementsByTagName('h2')[0]?.textContent as string;
     const authorText = book.getElementsByTagName('p')[0]?.textContent;
     // amazon format: "By: Author1, Author2 and Author3 or By: Author1"
     const authorsString = authorText?.split('By: ')[1] ?? '';

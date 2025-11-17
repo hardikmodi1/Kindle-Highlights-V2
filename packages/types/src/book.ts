@@ -1,7 +1,7 @@
 export type BookDTO = {
-  coverImageUrl?: string;
+  coverImageUrl?: string | null | undefined;
   asin: string;
   title: string;
   authors?: string[];
-  lastAccessedOn?: string;
+  lastAccessedOn?: Date | null;
 };

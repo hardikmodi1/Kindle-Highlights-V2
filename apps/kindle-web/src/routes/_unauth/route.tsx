@@ -8,7 +8,6 @@ export const Route = createFileRoute('/_unauth')({
 
 function RouteComponent() {
   const { data: session, isPending } = authClient.useSession();
-  console.log(session);
 
   if (isPending) {
     return <Loader />;

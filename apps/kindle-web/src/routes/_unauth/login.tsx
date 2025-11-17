@@ -29,7 +29,7 @@ function LoginComponent() {
       const { data, error } = await authClient.signIn.email({
         email: value.email,
         password: value.password,
-        callbackURL: '/dashboard',
+        callbackURL: '/library',
         fetchOptions: {
           onRequest: () => setLoading(true),
           onSuccess: () => setLoading(false),
