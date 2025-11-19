@@ -14,7 +14,8 @@ export const scrapBooksData = (doc: Document) => {
     const authors = authorsString
       .replace(/ and /g, ', ') // replace " and " with a comma
       .split(',') // split by comma
-      .map(s => s.trim());
+      .map(s => s.trim())
+      .filter(Boolean);
 
     // kindle stores this as `Thursday, November 6, 2025` format
     const lastAccessedOnString = book.getElementsByTagName('input')[0]?.getAttribute('value');
