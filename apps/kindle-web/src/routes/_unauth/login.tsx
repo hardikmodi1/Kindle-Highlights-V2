@@ -14,7 +14,7 @@ import { authClient } from '@/lib/auth-client';
 
 export const Route = createFileRoute('/_unauth/login')({ component: LoginComponent });
 
-const ZOD_SCHEMA = z.object({ email: z.email(), password: z.string().min(8) });
+const ZOD_SCHEMA = z.object({ email: z.string().email(), password: z.string().min(8) });
 
 function LoginComponent() {
   const [loading, setLoading] = useState(false);

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const envSchema = z.object({
   BETTER_AUTH_SECRET: z.string(),
-  BETTER_AUTH_URL: z.url(),
+  BETTER_AUTH_URL: z.string().url(),
 });
 
 const clientEnvSchema = z.object({});

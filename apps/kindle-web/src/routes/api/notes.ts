@@ -21,7 +21,7 @@ export const Route = createFileRoute('/api/notes')({
 
           const userTags = await prisma.tag.findMany({ where: { userId }, select: { shortForm: true, id: true } });
 
-          const notesData = rawNotes.map(({ highlightedText, note }) => {
+          const notesData = rawNotes.map(({ highlightedText, note, highlightId, location, noteId }) => {
             let matchedTags: Array<{ shortForm: string; id: string }> = [];
             let noteToSave: string | undefined;
 
@@ -41,6 +41,9 @@ export const Route = createFileRoute('/api/notes')({
               highlightedText,
               note: note !== noteToSave ? noteToSave : undefined,
               originalNote: note,
+              highlightId,
+              location,
+              noteId,
             };
           });
 

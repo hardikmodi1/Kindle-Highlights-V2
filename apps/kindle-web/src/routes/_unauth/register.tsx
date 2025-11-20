@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_unauth/register')({ component: SignupCom
 
 const ZOD_SCHEMA = z.object({
   name: z.string(),
-  email: z.email(),
+  email: z.string().email(),
   password: z.string().min(8),
 });
 
