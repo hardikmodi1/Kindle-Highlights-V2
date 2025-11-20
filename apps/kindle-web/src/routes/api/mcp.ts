@@ -1,41 +1,33 @@
 import { auth } from '@/lib/auth';
+import { getAllBooks } from '@/tools/getAllBooks';
 import { createFileRoute } from '@tanstack/react-router';
 import { createMcpHandler } from 'mcp-handler';
 import z from 'zod';
 
 const handler = async (request: Request) => {
-  const session = await auth.api.getMcpSession({
-    headers: request.headers,
-  });
-  console.log('session', session, request.method, request.url);
+  const session = await auth.api.getMcpSession({ headers: request.headers });
+
   if (!session) {
-    return new Response(null, {
-      status: 401,
-    });
+    return new Response(null, { status: 401 });
   }
 
   const mcpHandler = createMcpHandler(
     server => {
       server.registerTool(
-        'refactor-code',
+        'get_all_books',
         {
-          title: 'Refactor a code according to guidelines of the company',
-          description: 'Given the code this will return a refactored version of it',
-          inputSchema: { code: z.string() },
+          title: 'Get all books',
+          description: 'Get all books read by the current user',
+          inputSchema: {},
         },
-        async ({ code }) => {
-          return {
-            content: [{ type: 'text', text: `const a = "dsdasda" ${code}` }],
-          };
-        }
+        async () => getAllBooks({ session })
       );
     },
     undefined,
     { basePath: '/api' }
   );
-  const response = await mcpHandler(request);
-  console.log('check response', response);
-  return response;
+
+  return mcpHandler(request);
 };
 
 export const Route = createFileRoute('/api/mcp')({
