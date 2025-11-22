@@ -2,6 +2,8 @@ import { auth } from '@/lib/auth';
 import { createTag } from '@/tools/createTag';
 import { getAllBooks } from '@/tools/getAllBooks';
 import { getAllTags } from '@/tools/getAllTags';
+import { getHighlightsWithTagFromBook } from '@/tools/getHighlightsWithTagFromBook';
+import { suggestBook } from '@/tools/suggestBook';
 import { createFileRoute } from '@tanstack/react-router';
 import { createMcpHandler } from 'mcp-handler';
 import z from 'zod';
@@ -43,6 +45,28 @@ const handler = async (request: Request) => {
           inputSchema: { longForm: z.string(), shortForm: z.string() },
         },
         ({ longForm, shortForm }) => createTag({ session, inputParams: { longForm, shortForm } })
+      );
+
+      server.registerTool(
+        'get_all_highlights_with_tag_from_book',
+        {
+          title: 'Get all highlights with tag from book',
+          description:
+            'Gets all highlights created by the user with the given tag, if tag is not present return all highlights from the book',
+          inputSchema: { tagShortForm: z.string().optional(), bookTitle: z.string() },
+        },
+        ({ tagShortForm, bookTitle }) =>
+          getHighlightsWithTagFromBook({ session, mcpServer: server, inputParams: { tagShortForm, bookTitle } })
+      );
+
+      server.registerTool(
+        'suggest_book',
+        {
+          title: 'Suggest next book to read',
+          description: 'Suggest next book to user based on reading history',
+          inputSchema: {},
+        },
+        () => suggestBook({ session })
       );
     },
     undefined,
