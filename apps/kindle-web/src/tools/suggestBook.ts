@@ -2,7 +2,7 @@ import prisma from '@/lib/prisma';
 import { createServerOnlyFn } from '@tanstack/react-start';
 import { mastra } from '@/lib/mastra';
 
-import { type OAuthAccessToken } from 'better-auth/plugins';
+import { OAuthAccessToken } from 'better-auth/plugins';
 
 const bookAgent = mastra.getAgent('bookRecommenderAgent');
 
@@ -20,8 +20,11 @@ export const suggestBook = createServerOnlyFn(async ({ session }: { session: OAu
     const response = await bookAgent.generate([
       {
         role: 'system',
-        content:
-          'Based on the reading history of user, what books would you recommend to read next? Please analyze these reading patterns and suggest books that would interest user',
+        content: `
+          Based on the reading history of user, what books would you recommend to read next? Please analyze 
+          these reading patterns and suggest books that would interest user.
+          First highlight my current reading pattern and then directly give recommendations in the mentioned format without any other things
+          `,
       },
       {
         role: 'user',
