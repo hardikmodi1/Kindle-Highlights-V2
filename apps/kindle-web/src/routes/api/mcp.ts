@@ -3,6 +3,7 @@ import { createTag } from '@/tools/createTag';
 import { getAllBooks } from '@/tools/getAllBooks';
 import { getAllTags } from '@/tools/getAllTags';
 import { getHighlightsWithTagFromBook } from '@/tools/getHighlightsWithTagFromBook';
+import { searchHighlights } from '@/tools/searchHighlights';
 import { suggestBook } from '@/tools/suggestBook';
 import { createFileRoute } from '@tanstack/react-router';
 import { createMcpHandler } from 'mcp-handler';
@@ -67,6 +68,16 @@ const handler = async (request: Request) => {
           inputSchema: {},
         },
         () => suggestBook({ session })
+      );
+
+      server.registerTool(
+        'search_highlights',
+        {
+          title: 'Search highlights',
+          description: 'Search highlights with given keyword and book',
+          inputSchema: { bookTitle: z.string(), keywords: z.array(z.string()) },
+        },
+        ({ bookTitle, keywords }) => searchHighlights({ session, inputParams: { bookTitle, keywords } })
       );
     },
     undefined,
