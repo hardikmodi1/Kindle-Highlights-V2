@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Logo } from './Logo';
 import { Link } from '@tanstack/react-router';
+import { Clock8 } from 'lucide-react';
 
 const items = [
   {
@@ -24,6 +25,11 @@ const items = [
     title: 'Manage Tags',
     url: '/manage-tags',
     icon: Tags,
+  },
+  {
+    title: 'Daily Reminder',
+    url: '/reminder',
+    icon: Clock8,
   },
 ];
 

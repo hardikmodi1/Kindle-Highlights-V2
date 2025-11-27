@@ -14,6 +14,7 @@ declare global {
     interface ProcessEnv {
       readonly BETTER_AUTH_SECRET: string;
       readonly BETTER_AUTH_URL: string;
+      readonly SERVER_URL: string;
     }
   }
 }
